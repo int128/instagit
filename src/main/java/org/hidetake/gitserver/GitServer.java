@@ -9,9 +9,35 @@ import org.eclipse.jetty.servlet.ServletHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.eclipse.jgit.http.server.GitServlet;
 
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
+
+/**
+ * A Git server.
+ *
+ * @author Hidetake Iwata
+ */
 public class GitServer {
+    /**
+     * Create a Git server listening on loopback port.
+     *
+     * @param port listening port
+     * @param basePath base path of Git repositories
+     * @return a server
+     */
     public static Server create(int port, String basePath) {
-        Server server = new Server(port);
+        return create(new InetSocketAddress(InetAddress.getLoopbackAddress(), port), basePath);
+    }
+
+    /**
+     * Create a Git server.
+     *
+     * @param address listening address
+     * @param basePath base path of Git repositories
+     * @return a server
+     */
+    public static Server create(InetSocketAddress address, String basePath) {
+        Server server = new Server(address);
 
         HandlerList handlers = new HandlerList();
         handlers.addHandler(accessLogHandler());
