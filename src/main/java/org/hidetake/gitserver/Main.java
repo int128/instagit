@@ -1,5 +1,6 @@
+package org.hidetake.gitserver;
+
 import org.eclipse.jetty.server.Server;
-import org.hidetake.gitserver.GitServer;
 
 public class Main {
     public static void main(String[] args) throws Exception {
