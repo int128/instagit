@@ -1,6 +1,21 @@
 language: java
 jdk: oraclejdk7
 
+before_deploy:
+- ./gradlew -Pversion=${TRAVIS_TAG#v} shadowJar bintrayUpload
+deploy:
+  provider: releases
+  api_key:
+    secure: nAfuGXgFwlJG2AZ4aoKbfCefXmMmjnKt8WlJ9CFChdeL3gExhmNAgrCNPJacyAqbG4iNmDCzniTK10A7KqznnDxOTKANuGLDHAgeakKJCtjZCxWswLWxrcaqDG8qfYGIa4+lfNJTXcokrOa4IMbtY/DCgTDd6bGtk/0vGmm+/Pg=
+  skip_cleanup: true
+  file_glob: true
+  file: build/libs/*-all.jar
+  on:
+    tags: true
+    all_branches: true
+
 env:
   global:
-    - TERM=dumb
+  - TERM=dumb
+  - secure: "Rn7jzeY58TfUpeD+XX1qFLwh8CFNZOBiUh7vf47Qem+ZtqklMlBxBKysgDMY/XsGFve3W4fd0BJDZ0XrrvoyimKoA2gzplplW+ZWYrIF/w/ylGcBz6o9oDBPOAEpPc9qJ8S2esPBz9YV4x5Z2wBIGxSyMjqO0rY9DqFYNa2dryA="
+  - secure: "FT+6LoZ1kMJGtzkK64LZpBkMpxqP4UhR3QeZ2+DlKGf5pYplwHKZK2I2y4U5tHb1y4B6ue2dAhxkdoRSy3sDaUcEUdeQtPU/9ZLn7yD/fuEZEU6CKmIbEXjznaTfNeeRfDIS9Q3xgiFf0EOwge2lPGyhGTZWEcgMzQK/d6ecJwo="
