@@ -9,16 +9,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainOptions {
-    @Option(name = "-p", usage = "listening port (default: 8080)")
+    @Option(name = "-p", metaVar = "port", usage = "listening port (default: 8080)")
     public int port = 8080;
 
-    @Option(name = "-b", usage = "listening host (default: localhost)")
+    @Option(name = "-b", metaVar = "host", usage = "listening host (default: localhost)")
     public String hostname = "localhost";
 
     @Option(name = "-a", usage = "listening on all interfaces", forbids = "-b")
     public boolean bindAll = false;
 
-    @Argument(usage = "base path of Git repositories (default: current directory)")
+    @Argument(metaVar = "path", usage = "base path of Git repositories (default: current directory)")
     protected List<String> arguments = new ArrayList<String>();
 
     public String basePath = ".";

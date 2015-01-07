@@ -19,7 +19,9 @@ public class Main {
             main.server.start();
             main.server.join();
         } catch (CmdLineException e) {
-            System.err.println("usage: [-a] [-b host] [-p port] [path]");
+            System.err.print("usage:");
+            e.getParser().printSingleLineUsage(System.err);
+            System.err.println();
             e.getParser().printUsage(System.err);
             System.exit(1);
         }
