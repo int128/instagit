@@ -2,6 +2,8 @@ package org.hidetake.gitserver;
 
 import org.eclipse.jetty.server.Request;
 import org.eclipse.jetty.server.handler.HandlerWrapper;
+import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.errors.RepositoryNotFoundException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -22,8 +24,7 @@ public class RepositoryListHandler extends HandlerWrapper {
         if (request.getPathInfo().equals("/")) {
             response.setStatus(200);
             response.setContentType("text/plain");
-            PrintWriter writer = response.getWriter();
-            response(writer);
+            response(response.getWriter());
 
             baseRequest.setHandled(true);
         } else {
@@ -35,13 +36,20 @@ public class RepositoryListHandler extends HandlerWrapper {
         File baseDir = new File(basePath);
         File[] baseDirFiles = baseDir.listFiles();
         if (baseDirFiles != null) {
-            writer.append("Directories in path ").append(basePath);
+            writer.append("Repositories in path ").append(basePath);
             writer.println();
             writer.println();
 
             for(File file : baseDirFiles) {
                 if (file.isDirectory()) {
-                    writer.println(file.getName());
+                    try {
+                        Git.open(file);
+                        writer.append("[Git]  ").append(file.getName());
+                        writer.println();
+                    } catch (RepositoryNotFoundException e) {
+                        writer.append("[None] ").append(file.getName());
+                        writer.println();
+                    }
                 }
             }
         } else {
