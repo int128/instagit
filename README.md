@@ -1,18 +1,18 @@
-Instant Git Server
-==================
+InstaGit: instant Git server
+============================
 
-This is an instant Git server based on [JGit](http://eclipse.org/jgit/) and [Jetty](http://eclipse.org/jetty/).
+InstaGit is an instant Git server based on [JGit](http://eclipse.org/jgit/) and [Jetty](http://eclipse.org/jetty/).
 
 It requires Java 6 or later and provides Git access via HTTP.
 
 
-## How to run
+## How to Use
 
 Download the release and run on JVM.
 
 ```bash
-curl -LO https://github.com/int128/instant-git/releases/download/v0.1.0/instant-git-0.1.0-all.jar
-java -jar instant-git-0.1.0-all.jar
+curl -LO https://github.com/int128/instagit/releases/download/v1.0/instagit-1.0-all.jar
+java -jar instagit-1.0-all.jar
 ```
 
 The server will provide HTTP access to repositories in the current directory.
@@ -21,6 +21,8 @@ For example, if the current directory has `repo` directory, invoke following to 
 ```bash
 git clone http://localhost:8080/repo
 ```
+
+Also open `http://localhost:8080` on your browser to see list of repositories.
 
 ### Options
 
@@ -33,7 +35,7 @@ It accepts following options:
 Example:
 
 ```bash
-java -jar instant-git-x.y.z-all.jar -r ..
+java -jar instagit-1.0-all.jar -r ..
 ```
 
 ## Caveat
@@ -43,4 +45,3 @@ This server provides Git access without any authentication.
 ## Contribution
 
 This is an open source software licensed under the Apache License Version 2.0. Any issues or pull requests are welcome.
-
