@@ -18,17 +18,18 @@ public class MainOptions {
     @Option(name = "-a", usage = "listening on all interfaces", forbids = "-b")
     public boolean bindAll = false;
 
-    @Option(name = "-r", usage = "base path of Git repositories (default: current directory)")
-    public String basePath = ".";
+    @Argument(usage = "base path of Git repositories (default: current directory)")
+    protected List<String> arguments = new ArrayList<String>();
 
-    @Argument
-    public List<String> arguments = new ArrayList<String>();
+    public String basePath = ".";
 
     static MainOptions parse(String[] args) throws CmdLineException {
         MainOptions options = new MainOptions();
         CmdLineParser parser = new CmdLineParser(options);
         parser.parseArgument(args);
-        if (options.arguments.size() > 0) {
+        if (options.arguments.size() == 1) {
+            options.basePath = options.arguments.get(0);
+        } else if (options.arguments.size() > 1) {
             throw new CmdLineException(parser, "wrong arguments");
         }
 

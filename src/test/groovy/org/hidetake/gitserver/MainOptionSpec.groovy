@@ -42,9 +42,9 @@ class MainOptionSpec extends Specification {
         options.port == 80
     }
 
-    def "option -r should set listening port"() {
+    def "extra argument should set base path of repositories"() {
         when:
-        def options = MainOptions.parse('-r', '/')
+        def options = MainOptions.parse('/')
 
         then:
         options.basePath == '/'
@@ -63,10 +63,8 @@ class MainOptionSpec extends Specification {
         ['-h']                  | 'unknown option'
         ['-b']                  | 'less argument'
         ['-p']                  | 'less argument'
-        ['-r']                  | 'less argument'
         ['-p', 'some']          | 'invalid type of argument'
         ['-b', '1.2.3.4', '-a'] | 'invalid combination'
-        ['wrong']               | 'extra argument'
         ['wrong', 'bad']        | 'extra arguments'
     }
 
