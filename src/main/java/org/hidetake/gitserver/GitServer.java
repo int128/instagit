@@ -41,10 +41,15 @@ public class GitServer {
 
         HandlerList handlers = new HandlerList();
         handlers.addHandler(accessLogHandler());
+        handlers.addHandler(repositoryListHandler(basePath));
         handlers.addHandler(gitHandler(basePath));
 
         server.setHandler(handlers);
         return server;
+    }
+
+    public static Handler repositoryListHandler(String basePath) {
+        return new RepositoryListHandler(basePath);
     }
 
     public static Handler gitHandler(String basePath) {
