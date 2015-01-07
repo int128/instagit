@@ -17,6 +17,9 @@ public class Main {
     @Option(name = "-b", usage = "listening host (default: localhost)")
     private String hostname = "localhost";
 
+    @Option(name = "-a", usage = "listening on all interfaces", forbids = "-b")
+    private boolean bindAll = false;
+
     @Option(name = "-r", usage = "base path of Git repositories (default: current directory)")
     private String basePath = ".";
 
@@ -34,6 +37,10 @@ public class Main {
         } catch (CmdLineException e) {
             usage(parser);
             System.exit(1);
+        }
+
+        if (bindAll) {
+            hostname = "0.0.0.0";
         }
 
         Server server = GitServer.create(new InetSocketAddress(hostname, port), basePath);

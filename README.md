@@ -29,13 +29,14 @@ Also open `http://localhost:8080` on your browser to see list of repositories.
 It accepts following options:
 
 * `-r` - base path of repositories; default is `.` (current directory)
+* `-a` - listening on all interfaces
 * `-b` - listening host; default is `localhost`
 * `-p` - listening port; default is `8080`
 
 Example:
 
 ```bash
-java -jar instagit-1.0-all.jar -r ..
+java -jar instagit-1.0-all.jar -a -r ..
 ```
 
 ## Caveat
