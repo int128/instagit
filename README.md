@@ -10,6 +10,8 @@ You can publish your repositories and fetch them over the network.
 
 ## How to Use
 
+### Run the server
+
 Download the release and run. It requires Java 6 or later.
 
 ```sh
@@ -25,7 +27,7 @@ docker run --rm -p 8080:8080 -v /repos:/repos int128/instagit
 
 ### Try Git access
 
-It provides access to repositories in the current directory at default.
+The server provides access to repositories in the current directory at default.
 
 For example, if the current directory has children as follows,
 
@@ -40,7 +42,10 @@ git clone http://localhost:8080/repo1
 git clone http://localhost:8080/repo2
 ```
 
-Open `http://localhost:8080` in your browser to see list of repositories.
+Following URLs will serve the list of repositories.
+
+* Open `http://localhost:8080/` to see a Web page.
+* Open `http://localhost:8080/?json` to get a JSON.
 
 ### Options
 
@@ -65,7 +70,6 @@ It does not provide write access currently.
 ## To Do
 
 * [ ] Provides write access with an authentication
-* [ ] Friendly Web interface
 
 ## Contribution
 

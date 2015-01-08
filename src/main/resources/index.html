@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <title>InstaGit: instant Git HTTP server</title>
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.0/cosmo/bootstrap.min.css"/>
+</head>
+<body>
+
+<div class="container">
+  <div class="page-header">
+    <h1>InstaGit <small>instant Git HTTP server</small></h1>
+  </div>
+
+  <p>
+    <a href="?json">View as JSON</a>
+  </p>
+
+  <h2>Repositories</h2>
+  <p>Base directory is <code>{{git.baseDir}}</code></p>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>URL</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr v-repeat="git.repositories">
+        <td>{{$value}}</td>
+        <td><code>{{baseUrl}}{{$value}}</code></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<script src="//code.jquery.com/jquery-2.1.0.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/vue/0.11.0/vue.min.js"></script>
+
+<script>
+  $(function () {
+    var vm = new Vue({
+      el: 'body',
+      data: {
+        git: null,
+        baseUrl: location.href
+      }
+    });
+    $.get('?json').then(function (response) {
+      console.info(response);
+      vm.git = response;
+    });
+  });
+</script>
+
+</body>
+</html>
