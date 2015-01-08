@@ -7,4 +7,4 @@ run cd /usr/src/instagit && ./gradlew -g .gradle shadowJar && cp -a build/libs/*
 volume /repos
 workdir /repos
 expose 8080
-cmd ["java", "-jar", "/instagit.jar", "-a"]
+cmd ["java", "-jar", "/instagit.jar"]

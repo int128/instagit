@@ -12,11 +12,11 @@ public class MainOptions {
     @Option(name = "-p", metaVar = "port", usage = "listening port (default: 8080)")
     public int port = 8080;
 
-    @Option(name = "-b", metaVar = "host", usage = "listening host (default: localhost)")
-    public String hostname = "localhost";
+    @Option(name = "-b", metaVar = "host", usage = "listening host (default: all interfaces)")
+    public String hostname = "0.0.0.0";
 
-    @Option(name = "-a", usage = "listening on all interfaces", forbids = "-b")
-    public boolean bindAll = false;
+    @Option(name = "-l", usage = "listening on localhost", forbids = "-b")
+    public boolean bindLocal = false;
 
     @Argument(metaVar = "path", usage = "base path of Git repositories (default: current directory)")
     protected List<String> arguments = new ArrayList<String>();
@@ -33,8 +33,8 @@ public class MainOptions {
             throw new CmdLineException(parser, "wrong arguments");
         }
 
-        if (options.bindAll) {
-            options.hostname = "0.0.0.0";
+        if (options.bindLocal) {
+            options.hostname = "localhost";
         }
 
         return options;

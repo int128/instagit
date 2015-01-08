@@ -11,19 +11,19 @@ class MainOptionSpec extends Specification {
         def options = MainOptions.parse()
 
         then:
-        !options.bindAll
+        !options.bindLocal
         options.port == 8080
-        options.hostname == 'localhost'
+        options.hostname == '0.0.0.0'
         options.basePath == '.'
     }
 
-    def "option -a should listen on all interfaces"() {
+    def "option -l should listen on localhost"() {
         when:
-        def options = MainOptions.parse('-a')
+        def options = MainOptions.parse('-l')
 
         then:
-        options.bindAll
-        options.hostname == '0.0.0.0'
+        options.bindLocal
+        options.hostname == 'localhost'
     }
 
     def "option -b should set listening host"() {
@@ -64,7 +64,7 @@ class MainOptionSpec extends Specification {
         ['-b']                  | 'less argument'
         ['-p']                  | 'less argument'
         ['-p', 'some']          | 'invalid type of argument'
-        ['-b', '1.2.3.4', '-a'] | 'invalid combination'
+        ['-b', '1.2.3.4', '-l'] | 'invalid combination'
         ['wrong', 'bad']        | 'extra arguments'
     }
 

@@ -24,7 +24,7 @@ class MainSpec extends Specification {
         main.server.started
         main.server.connectors.length == 1
         main.server.connectors.first().port == 8080
-        main.server.connectors.first().host == 'localhost'
+        main.server.connectors.first().host == '0.0.0.0'
 
         cleanup:
         main.server.stop()

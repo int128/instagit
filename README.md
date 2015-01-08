@@ -51,15 +51,15 @@ Following URLs will serve the list of repositories.
 
 It accepts following options:
 
-* `-a` - listening on all interfaces
-* `-b host` - listening host; default is `-b localhost` (allows access from localhost)
+* `-b host` - listening host; default is `-b 0.0.0.0` (all interfaces)
 * `-p port` - listening port; default is `-p 8080`
+* `-l` - listening on localhost
 * Extra argument - a base path of repositories; default is `.` (current directory)
 
 Example:
 
 ```sh
-java -jar instagit-1.0-all.jar -a ..
+java -jar instagit-1.0-all.jar -l ..
 ```
 
 ### Caveat
