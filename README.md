@@ -17,6 +17,14 @@ curl -LO https://github.com/int128/instagit/releases/download/v1.0/instagit-1.0-
 java -jar instagit-1.0-all.jar
 ```
 
+InstaGit is available on Docker Hub. Run a container as follows.
+
+```sh
+docker run --rm -p 8080:8080 -v /repos:/repos int128/instagit
+```
+
+### Try Git access
+
 It provides access to repositories in the current directory at default.
 
 For example, if the current directory has children as follows,
