@@ -2,7 +2,6 @@ package org.hidetake.gitserver
 
 import groovyx.net.http.HttpResponseDecorator
 import groovyx.net.http.RESTClient
-import org.eclipse.jetty.server.ServerConnector
 import org.junit.Rule
 import org.junit.contrib.java.lang.system.ExpectedSystemExit
 import org.junit.contrib.java.lang.system.internal.CheckExitCalled
@@ -24,8 +23,8 @@ class MainSpec extends Specification {
         then:
         main.server.started
         main.server.connectors.length == 1
-        (main.server.connectors.first() as ServerConnector).port == 8080
-        (main.server.connectors.first() as ServerConnector).host == 'localhost'
+        main.server.connectors.first().port == 8080
+        main.server.connectors.first().host == 'localhost'
 
         cleanup:
         main.server.stop()

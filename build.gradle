@@ -14,7 +14,7 @@ repositories {
 }
 
 dependencies {
-    compile 'org.eclipse.jetty:jetty-servlet:9.2.6.v20141205'
+    compile 'org.eclipse.jetty:jetty-servlet:8.1.16.v20140903'
     compile 'org.eclipse.jgit:org.eclipse.jgit.http.server:3.6.0.201412230720-r'
     compile 'args4j:args4j:2.0.29'
 
