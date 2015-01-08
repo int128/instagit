@@ -1,9 +1,10 @@
 from dockerfile/java:oracle-java7
- 
-run mkdir -p /usr/src/app
-workdir /usr/src/app
- 
-add . /usr/src/app
-run ./gradlew assemble
- 
-cmd ["./gradlew", "run"]
+
+volume /usr/src/instagit
+copy . /usr/src/instagit
+run cd /usr/src/instagit && ./gradlew -g .gradle shadowJar && cp -a build/libs/*-all.jar /instagit.jar
+
+volume /repos
+workdir /repos
+expose 8080
+cmd ["java", "-jar", "/instagit.jar", "-a"]
