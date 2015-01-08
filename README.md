@@ -1,4 +1,4 @@
-InstaGit
+InstaGit [![Build Status](https://travis-ci.org/int128/instagit.svg?branch=master)](https://travis-ci.org/int128/instagit)
 ========
 
 InstaGit is an instant Git server based on [JGit](http://eclipse.org/jgit/) and [Jetty](http://eclipse.org/jetty/).
