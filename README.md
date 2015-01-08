@@ -67,6 +67,24 @@ java -jar instagit-1.0-all.jar -a ..
 The server provides read-only access without any authentication.
 It does not provide write access currently.
 
+
+## How to Use in your App
+
+Instantiate a server by calling [`GitServer.create()`](src/main/java/org/hidetake/gitserver/GitServer.java) method.
+
+```java
+import org.eclipse.jetty.server.Server;
+import org.hidetake.gitserver.GitServer;
+import java.net.InetSocketAddress;
+
+Server server = GitServer.create(new InetSocketAddress("0.0.0.0", 8080), ".");
+server.start();
+server.stop();
+```
+
+See [`Main`](src/main/java/org/hidetake/gitserver/Main.java) class for details.
+
+
 ## To Do
 
 * [ ] Provides write access with an authentication
