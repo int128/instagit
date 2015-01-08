@@ -1,5 +1,7 @@
 package org.hidetake.gitserver
 
+import groovyx.net.http.HttpResponseDecorator
+import groovyx.net.http.RESTClient
 import org.eclipse.jetty.server.ServerConnector
 import org.junit.Rule
 import org.junit.contrib.java.lang.system.ExpectedSystemExit
@@ -24,6 +26,44 @@ class MainSpec extends Specification {
         main.server.connectors.length == 1
         (main.server.connectors.first() as ServerConnector).port == 8080
         (main.server.connectors.first() as ServerConnector).host == 'localhost'
+
+        cleanup:
+        main.server.stop()
+    }
+
+    def "server should response a HTML on /"() {
+        given:
+        def main = new Main(MainOptions.parse())
+        main.server.start()
+
+        when:
+        def response = new RESTClient('http://localhost:8080').get(path: '/') as HttpResponseDecorator
+
+        then:
+        response.status == 200
+        response.contentType == 'text/html'
+        response.entity.contentLength > 100
+
+        cleanup:
+        main.server.stop()
+    }
+
+    def "server should response a JSON on /?json"() {
+        given:
+        def main = new Main(MainOptions.parse())
+        main.server.start()
+
+        when:
+        def response = new RESTClient('http://localhost:8080').get(path: '/', queryString: 'json') as HttpResponseDecorator
+
+        then:
+        response.status == 200
+        response.contentType == 'application/json'
+        response.entity.contentLength > 10
+
+        and:
+        response.data.baseDir == '.'
+        response.data.repositories instanceof Collection
 
         cleanup:
         main.server.stop()
