@@ -7,7 +7,7 @@ public class Main {
     protected Server server;
 
     public Main(MainOptions options) {
-        server = GitServer.create(options.getAddress(), options.getBasePath());
+        server = GitServer.create(options.getBindAddress(), options.getBasePath());
     }
 
     public static void main(String[] args) throws Exception {

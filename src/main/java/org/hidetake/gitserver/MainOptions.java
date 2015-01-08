@@ -21,17 +21,25 @@ public class MainOptions {
     @Argument(metaVar = "path", usage = "base path of Git repositories (default: current directory)")
     private String basePath = ".";
 
+    private InetSocketAddress bindAddress;
+
+    private MainOptions() {}
+
     public String getBasePath() {
         return basePath;
     }
 
-    public InetSocketAddress getAddress() {
+    public InetSocketAddress getBindAddress() {
+        return bindAddress;
+    }
+
+    private void computeBindAddress() {
         if (bindLocal) {
-            return new InetSocketAddress(InetAddress.getLoopbackAddress(), port);
+            bindAddress = new InetSocketAddress(InetAddress.getLoopbackAddress(), port);
         } else if (hostname == null) {
-            return new InetSocketAddress(port);
+            bindAddress = new InetSocketAddress(port);
         } else {
-            return new InetSocketAddress(hostname, port);
+            bindAddress = new InetSocketAddress(hostname, port);
         }
     }
 
@@ -39,6 +47,7 @@ public class MainOptions {
         MainOptions options = new MainOptions();
         CmdLineParser parser = new CmdLineParser(options);
         parser.parseArgument(args);
+        options.computeBindAddress();
         return options;
     }
 }
