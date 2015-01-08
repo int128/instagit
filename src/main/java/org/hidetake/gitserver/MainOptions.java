@@ -7,8 +7,6 @@ import org.kohsuke.args4j.Option;
 
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
-import java.util.ArrayList;
-import java.util.List;
 
 public class MainOptions {
     @Option(name = "-p", metaVar = "port", usage = "listening port (default: 8080)")
@@ -21,10 +19,10 @@ public class MainOptions {
     private boolean bindLocal = false;
 
     @Argument(metaVar = "path", usage = "base path of Git repositories (default: current directory)")
-    private List<String> arguments = new ArrayList<String>();
+    private String basePath = ".";
 
     public String getBasePath() {
-        return arguments.isEmpty() ? "." : arguments.get(0);
+        return basePath;
     }
 
     public InetSocketAddress getAddress() {
@@ -41,9 +39,6 @@ public class MainOptions {
         MainOptions options = new MainOptions();
         CmdLineParser parser = new CmdLineParser(options);
         parser.parseArgument(args);
-        if (options.arguments.size() > 1) {
-            throw new CmdLineException(parser, "wrong arguments");
-        }
         return options;
     }
 }
