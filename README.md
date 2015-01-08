@@ -3,26 +3,36 @@ InstaGit
 
 InstaGit is an instant Git server based on [JGit](http://eclipse.org/jgit/) and [Jetty](http://eclipse.org/jetty/).
 
-It requires Java 6 or later.
+It provides HTTP access to existing Git repositories in the local filesystem.
+
+You can publish your repositories and fetch them over the network.
 
 
 ## How to Use
 
-Download the release and run.
+Download the release and run. It requires Java 6 or later.
 
 ```sh
 curl -LO https://github.com/int128/instagit/releases/download/v1.0/instagit-1.0-all.jar
 java -jar instagit-1.0-all.jar
 ```
 
-The server provides HTTP access to repositories in the current directory.
-For example, if the current directory has `repo` directory, invoke following to clone it.
+It provides access to repositories in the current directory at default.
+
+For example, if the current directory has children as follows,
+
+* `.` (currrent directory)
+  * `./repo1` (directory of Git repository)
+  * `./repo2` (directory of Git repository)
+
+run following commands to clone them:
 
 ```sh
-git clone http://localhost:8080/repo
+git clone http://localhost:8080/repo1
+git clone http://localhost:8080/repo2
 ```
 
-Also open `http://localhost:8080` on your browser to see list of repositories.
+Open `http://localhost:8080` in your browser to see list of repositories.
 
 ### Options
 
@@ -41,7 +51,13 @@ java -jar instagit-1.0-all.jar -a ..
 
 ### Caveat
 
-The server provides Git HTTP access without any authentication.
+The server provides read-only access without any authentication.
+It does not provide write access currently.
+
+## To Do
+
+* [ ] Provides write access with an authentication
+* [ ] Friendly Web interface
 
 ## Contribution
 
