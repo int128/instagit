@@ -7,8 +7,11 @@ import org.eclipse.jetty.server.handler.HandlerList;
 import org.eclipse.jetty.server.handler.RequestLogHandler;
 import org.eclipse.jetty.servlet.ServletHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
+import org.eclipse.jetty.util.log.Log;
+import org.eclipse.jetty.util.log.Logger;
 import org.eclipse.jgit.http.server.GitServlet;
 
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 
@@ -62,8 +65,14 @@ public class GitServer {
 
     public static Handler accessLogHandler() {
         RequestLogHandler requestLogHandler = new RequestLogHandler();
-        NCSARequestLog requestLog = new NCSARequestLog();
-        requestLogHandler.setRequestLog(requestLog);
+        requestLogHandler.setRequestLog(new NCSARequestLog() {
+            private final Logger LOG = Log.getLogger(this.getClass());
+
+            @Override
+            public void write(String requestEntry) throws IOException {
+                LOG.info(requestEntry);
+            }
+        });
         return requestLogHandler;
     }
 }

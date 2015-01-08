@@ -2,6 +2,8 @@ package org.hidetake.gitserver;
 
 import org.eclipse.jetty.server.Request;
 import org.eclipse.jetty.server.handler.HandlerWrapper;
+import org.eclipse.jetty.util.log.Log;
+import org.eclipse.jetty.util.log.Logger;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.errors.RepositoryNotFoundException;
 
@@ -14,10 +16,18 @@ import java.util.Iterator;
 import java.util.List;
 
 public class RepositoryListHandler extends HandlerWrapper {
+    private static final Logger LOG = Log.getLogger(RepositoryListHandler.class);
+
     private final String basePath;
 
     public RepositoryListHandler(String basePath) {
         this.basePath = basePath;
+    }
+
+    @Override
+    protected void doStart() throws Exception {
+        LOG.info("basePath={}", basePath);
+        super.doStart();
     }
 
     @Override
@@ -71,7 +81,7 @@ public class RepositoryListHandler extends HandlerWrapper {
                         git = Git.open(file);
                         repositories.add(file.getName());
                     } catch (RepositoryNotFoundException e) {
-                        System.err.println(e.getLocalizedMessage());
+                        LOG.info("Not Git repository: {}", file.getCanonicalPath());
                     } finally {
                         if (git != null) {
                             git.close();
