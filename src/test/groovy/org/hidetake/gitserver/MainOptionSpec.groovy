@@ -11,9 +11,8 @@ class MainOptionSpec extends Specification {
         def options = MainOptions.parse()
 
         then:
-        !options.bindLocal
-        options.port == 8080
-        options.hostname == '0.0.0.0'
+        options.address.port == 8080
+        options.address.hostName == '0.0.0.0'
         options.basePath == '.'
     }
 
@@ -22,8 +21,7 @@ class MainOptionSpec extends Specification {
         def options = MainOptions.parse('-l')
 
         then:
-        options.bindLocal
-        options.hostname == 'localhost'
+        options.address.hostName == 'localhost'
     }
 
     def "option -b should set listening host"() {
@@ -31,7 +29,7 @@ class MainOptionSpec extends Specification {
         def options = MainOptions.parse('-b', '1.2.3.4')
 
         then:
-        options.hostname == '1.2.3.4'
+        options.address.hostName == '1.2.3.4'
     }
 
     def "option -b should set listening port"() {
@@ -39,7 +37,7 @@ class MainOptionSpec extends Specification {
         def options = MainOptions.parse('-p', '80')
 
         then:
-        options.port == 80
+        options.address.port == 80
     }
 
     def "extra argument should set base path of repositories"() {

@@ -3,13 +3,11 @@ package org.hidetake.gitserver;
 import org.eclipse.jetty.server.Server;
 import org.kohsuke.args4j.CmdLineException;
 
-import java.net.InetSocketAddress;
-
 public class Main {
     protected Server server;
 
     public Main(MainOptions options) {
-        server = GitServer.create(new InetSocketAddress(options.hostname, options.port), options.basePath);
+        server = GitServer.create(options.getAddress(), options.getBasePath());
     }
 
     public static void main(String[] args) throws Exception {
