@@ -15,8 +15,8 @@ You can publish your repositories and fetch them over the network.
 Download the release and run. It requires Java 6 or later.
 
 ```sh
-curl -LO https://github.com/int128/instagit/releases/download/v1.0/instagit-1.0-all.jar
-java -jar instagit-1.0-all.jar
+curl -LO https://github.com/int128/instagit/releases/download/latest/instagit.jar
+java -jar instagit.jar
 ```
 
 InstaGit is available on Docker Hub. Run a container as follows.
@@ -59,7 +59,7 @@ It accepts following options:
 Example:
 
 ```sh
-java -jar instagit-1.0-all.jar -l ..
+java -jar instagit.jar -l ..
 ```
 
 ### Caveat
@@ -74,7 +74,7 @@ InstaGit is available on [Maven Central](https://search.maven.org/#search%7Cgav%
 
 ```groovy
 // Gradle
-compile 'org.hidetake:instagit:1.0'
+compile 'org.hidetake:instagit:x.y'
 ```
 
 Create and start a server by calling [`GitServer.create()`](src/main/java/org/hidetake/gitserver/GitServer.java) method.

@@ -26,6 +26,10 @@ dependencies {
     testRuntime 'org.objenesis:objenesis:2.1'
 }
 
+processResources {
+    filter(org.apache.tools.ant.filters.ReplaceTokens, tokens: ['version': project.version])
+}
+
 /*
  * Tasks and settings for publishing to Bintray
  */
@@ -43,7 +47,8 @@ shadowJar {
     manifest {
         attributes 'Main-Class': 'org.hidetake.gitserver.Main'
     }
-    mergeServiceFiles()
+    classifier = ''
+    version = ''
 }
 
 publishing {

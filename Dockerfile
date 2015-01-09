@@ -2,7 +2,7 @@ from dockerfile/java:oracle-java7
 
 volume /usr/src/instagit
 copy . /usr/src/instagit
-run cd /usr/src/instagit && ./gradlew -g .gradle shadowJar && cp -a build/libs/*-all.jar /instagit.jar
+run cd /usr/src/instagit && ./gradlew -g .gradle shadowJar && cp -a build/libs/instagit.jar /
 
 volume /repos
 workdir /repos

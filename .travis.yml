@@ -10,7 +10,7 @@ deploy:
     secure: nAfuGXgFwlJG2AZ4aoKbfCefXmMmjnKt8WlJ9CFChdeL3gExhmNAgrCNPJacyAqbG4iNmDCzniTK10A7KqznnDxOTKANuGLDHAgeakKJCtjZCxWswLWxrcaqDG8qfYGIa4+lfNJTXcokrOa4IMbtY/DCgTDd6bGtk/0vGmm+/Pg=
   skip_cleanup: true
   file_glob: true
-  file: build/libs/*-all.jar
+  file: build/libs/instagit.jar
   on:
     tags: true
     all_branches: true

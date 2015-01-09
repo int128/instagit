@@ -12,6 +12,7 @@ import org.eclipse.jetty.util.log.Logger;
 import org.eclipse.jgit.http.server.GitServlet;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.InetSocketAddress;
 
 /**
@@ -20,6 +21,8 @@ import java.net.InetSocketAddress;
  * @author Hidetake Iwata
  */
 public class GitServer {
+    private static final Logger LOG = Log.getLogger(GitServer.class);
+
     /**
      * Create a Git server.
      *
@@ -28,13 +31,16 @@ public class GitServer {
      * @return a server
      */
     public static Server create(InetSocketAddress address, String basePath) {
-        Server server = new Server(address);
+        LOG.info("Version={}", version());
+        LOG.info("BindAddress={}", address);
+        LOG.info("BasePath={}", basePath);
 
         HandlerList handlers = new HandlerList();
         handlers.addHandler(accessLogHandler());
         handlers.addHandler(repositoryListHandler(basePath));
         handlers.addHandler(gitHandler(basePath));
 
+        Server server = new Server(address);
         server.setHandler(handlers);
         return server;
     }
@@ -54,14 +60,38 @@ public class GitServer {
     public static Handler accessLogHandler() {
         RequestLogHandler requestLogHandler = new RequestLogHandler();
         requestLogHandler.setRequestLog(new NCSARequestLog() {
-            private final Logger LOG = Log.getLogger(this.getClass());
-
             @Override
             public void write(String requestEntry) throws IOException {
                 LOG.info(requestEntry);
             }
         });
         return requestLogHandler;
+    }
+
+    public static String version() {
+        InputStream stream = null;
+        try {
+            stream = GitServer.class.getResourceAsStream("/version");
+            if (stream != null) {
+                byte[] buffer = new byte[64];
+                int read = stream.read(buffer);
+                return new String(buffer, 0, read);
+            } else {
+                LOG.debug("Could not find version resource");
+                return "";
+            }
+        } catch (IOException e) {
+            LOG.debug(e);
+            return "";
+        } finally {
+            if (stream != null) {
+                try {
+                    stream.close();
+                } catch (IOException e) {
+                    LOG.debug(e);
+                }
+            }
+        }
     }
 
     private GitServer() {}

@@ -25,12 +25,6 @@ public class RepositoryListHandler extends HandlerWrapper {
     }
 
     @Override
-    protected void doStart() throws Exception {
-        LOG.info("basePath={}", basePath);
-        super.doStart();
-    }
-
-    @Override
     public void handle(String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         if ("/".equals(request.getPathInfo())) {
             if ("json".equals(request.getQueryString())) {
