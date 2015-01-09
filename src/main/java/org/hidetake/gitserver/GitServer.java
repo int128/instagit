@@ -12,7 +12,6 @@ import org.eclipse.jetty.util.log.Logger;
 import org.eclipse.jgit.http.server.GitServlet;
 
 import java.io.IOException;
-import java.net.InetAddress;
 import java.net.InetSocketAddress;
 
 /**
@@ -21,17 +20,6 @@ import java.net.InetSocketAddress;
  * @author Hidetake Iwata
  */
 public class GitServer {
-    /**
-     * Create a Git server listening on loopback port.
-     *
-     * @param port listening port
-     * @param basePath base path of Git repositories
-     * @return a server
-     */
-    public static Server create(int port, String basePath) {
-        return create(new InetSocketAddress(InetAddress.getLoopbackAddress(), port), basePath);
-    }
-
     /**
      * Create a Git server.
      *
