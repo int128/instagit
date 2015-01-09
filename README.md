@@ -70,25 +70,37 @@ It does not provide write access currently.
 
 ## How to Use in your App
 
-Instantiate a server by calling [`GitServer.create()`](src/main/java/org/hidetake/gitserver/GitServer.java) method.
+InstaGit is available on [Maven Central](https://search.maven.org/#search%7Cgav%7C1%7Cg%3A%22org.hidetake%22%20AND%20a%3A%22instagit%22) and [Bintray](https://bintray.com/int128/maven/instagit).
+
+```groovy
+// Gradle
+compile 'org.hidetake:instagit:1.0'
+```
+
+Create and start a server by calling [`GitServer.create()`](src/main/java/org/hidetake/gitserver/GitServer.java) method.
 
 ```java
 import org.eclipse.jetty.server.Server;
 import org.hidetake.gitserver.GitServer;
 import java.net.InetSocketAddress;
 
-Server server = GitServer.create(new InetSocketAddress("0.0.0.0", 8080), ".");
+Server server = GitServer.create(new InetSocketAddress(8080), ".");
 server.start();
+
 server.stop();
 ```
 
-See [`Main`](src/main/java/org/hidetake/gitserver/Main.java) class for details.
+See [`Main`](src/main/java/org/hidetake/gitserver/Main.java) class for example.
 
 
-## To Do
+## Architecture
 
-* [ ] Provides write access with an authentication
+Product code is written in Java 6.
+It uses [Jetty](http://eclipse.org/jetty/) server and [JGit](http://eclipse.org/jgit/) servlet.
+
+Test code is written in Groovy and Spock.
+
 
 ## Contribution
 
-This is an open source software licensed under the Apache License Version 2.0. Any issues or pull requests are welcome.
+This is an open source software licensed under the Apache License Version 2.0. Send me your issue or pull request.
