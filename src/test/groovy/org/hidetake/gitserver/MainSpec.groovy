@@ -17,13 +17,13 @@ class MainSpec extends Specification {
     def "main should start a server on given port"() {
         given:
         int port = Utility.pickUpFreePort()
-        def conditions = new PollingConditions()
+        def polling = new PollingConditions(timeout: 3)
 
         when:
         Thread.start { Main.main '-p', "$port" }
 
         then:
-        conditions.within(3.0) {
+        polling {
             try {
                 def response = new RESTClient("http://localhost:$port").get(path: '/') as HttpResponseDecorator
                 assert response.success
