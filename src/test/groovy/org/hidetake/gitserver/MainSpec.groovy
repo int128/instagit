@@ -6,66 +6,26 @@ import org.junit.Rule
 import org.junit.contrib.java.lang.system.ExpectedSystemExit
 import org.junit.contrib.java.lang.system.internal.CheckExitCalled
 import spock.lang.Specification
+import spock.util.concurrent.PollingConditions
 
 class MainSpec extends Specification {
 
     @Rule
     final ExpectedSystemExit exit = ExpectedSystemExit.none()
 
-    def "server should listen on localhost:8080 at default"() {
+    def "main should start a server on given port"() {
         given:
-        def options = MainOptions.parse()
-        def main = new Main(options)
+        int port = Utility.pickUpFreePort()
+        def conditions = new PollingConditions()
 
         when:
-        main.server.start()
+        Thread.start { Main.main '-p', "$port" }
 
         then:
-        main.server.started
-        main.server.connectors.length == 1
-        main.server.connectors.first().port == 8080
-        main.server.connectors.first().host == '0.0.0.0'
-
-        cleanup:
-        main.server.stop()
-    }
-
-    def "server should response a HTML on /"() {
-        given:
-        def main = new Main(MainOptions.parse())
-        main.server.start()
-
-        when:
-        def response = new RESTClient('http://localhost:8080').get(path: '/') as HttpResponseDecorator
-
-        then:
-        response.status == 200
-        response.contentType == 'text/html'
-        response.entity.contentLength > 100
-
-        cleanup:
-        main.server.stop()
-    }
-
-    def "server should response a JSON on /?json"() {
-        given:
-        def main = new Main(MainOptions.parse())
-        main.server.start()
-
-        when:
-        def response = new RESTClient('http://localhost:8080').get(path: '/', queryString: 'json') as HttpResponseDecorator
-
-        then:
-        response.status == 200
-        response.contentType == 'application/json'
-        response.entity.contentLength > 10
-
-        and:
-        response.data.baseDir == '.'
-        response.data.repositories instanceof Collection
-
-        cleanup:
-        main.server.stop()
+        conditions.within(1) {
+            def response = new RESTClient("http://localhost:$port").get(path: '/') as HttpResponseDecorator
+            assert response.success
+        }
     }
 
     def "unknown option should show usage"() {
