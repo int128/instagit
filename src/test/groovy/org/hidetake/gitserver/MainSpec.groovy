@@ -2,6 +2,7 @@ package org.hidetake.gitserver
 
 import groovyx.net.http.HttpResponseDecorator
 import groovyx.net.http.RESTClient
+import org.apache.http.conn.HttpHostConnectException
 import org.junit.Rule
 import org.junit.contrib.java.lang.system.ExpectedSystemExit
 import org.junit.contrib.java.lang.system.internal.CheckExitCalled
@@ -22,9 +23,13 @@ class MainSpec extends Specification {
         Thread.start { Main.main '-p', "$port" }
 
         then:
-        conditions.within(1) {
-            def response = new RESTClient("http://localhost:$port").get(path: '/') as HttpResponseDecorator
-            assert response.success
+        conditions.within(3.0) {
+            try {
+                def response = new RESTClient("http://localhost:$port").get(path: '/') as HttpResponseDecorator
+                assert response.success
+            } catch (HttpHostConnectException e) {
+                assert false, e.localizedMessage
+            }
         }
     }
 
