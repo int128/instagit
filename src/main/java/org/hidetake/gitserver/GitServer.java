@@ -63,4 +63,6 @@ public class GitServer {
         });
         return requestLogHandler;
     }
+
+    private GitServer() {}
 }
